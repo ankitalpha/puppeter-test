@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My PDF Document</title>
+    <style>
+      /* Set up the header and footer */
+      @page {
+        size: A4;
+        width:500;
+        margin-top: 2cm;
+        margin-bottom: 2cm;
+        margin-left: 2cm;
+        margin-right: 2cm;
+        header: page-header;
+        footer: page-footer;
+      }
+
+      /* Style the header */
+      #page-header {
+        width:500;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2cm;
+        background-color: hsl(341, 75%, 56%);
+        text-align: center;
+        line-height: 2cm;
+      }
+
+      /* Style the footer */
+      #page-footer {
+        position: fixed;
+        width:500;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2cm;
+        background-color: #2915c0;
+        text-align: center;
+        line-height: 2cm;
+      }
+
+      /* Style the content */
+      #content {
+        margin-top: 4cm;
+        text-align: center;
+        font-size: 24px;
+        width:500;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Define the header -->
+    <div id="page-header">
+      <h1>My PDF Document</h1>
+    </div>
+
+    <!-- Define the footer -->
+    <div id="page-footer">
+      <p>Page <span class="pageNumber"></span> of <span class="totalPages"></span></p>
+    </div>
+
+    <!-- Define the content -->
+    <div id="content">
+      <p>This is some sample content that should fit onto a standard A4 size page.</p>
+      <p>You can adjust the margins, font size, and other properties in the stylesheet to fit your specific needs.</p>
+    </div>
+
+    <!-- Include the page number script -->
+    <script>
+      // Define the page number script
+      const total = document.querySelector('.totalPages');
+      const current = document.querySelector('.pageNumber');
+      const pages = Array.from(document.querySelectorAll('body > div')).filter(div => div.getAttribute('id') !== 'page-footer');
+
+      total.innerHTML = pages.length;
+
+      pages.forEach((div, index) => {
+        const span = document.createElement('span');
+        span.innerHTML = index + 1;
+        div.appendChild(span);
+      });
+
+      // Update the current page number when the page is rendered
+      window.onload = () => {
+        current.innerHTML = document.querySelector('.pageNumber span').innerHTML;
+      };
+    </script>
+  </body>
+</html>
